@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============================================================
+     EDIT ME FIRST: page title shown in the browser tab
+     ============================================================ -->
+<title>Responsive Nanomedicine Lab — Krishan Kumar</title>
+<meta name="description" content="Research group designing stimuli-responsive polymers and nanomedicines for gene delivery, biocatalysis, and theranostics.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN TOKENS  — change colors/fonts in one place
+   ============================================================ */
+:root{
+  --ink:      #0E2A2B;   /* deep pine, main text + dark sections */
+  --paper:    #F4F6F3;   /* cool lab-white, page background      */
+  --swell:    #1B6E5E;   /* emerald — the "native" accent        */
+  --trigger:  #FF6B4A;   /* coral — the "responsive shift" accent */
+  --mist:     #C3D2CB;   /* muted sage — borders, dividers       */
+  --mist-ink: #5C726B;   /* muted text on paper                  */
+
+  --display: "Space Grotesk", system-ui, sans-serif;
+  --body:    "Newsreader", Georgia, serif;
+  --mono:    "Space Mono", ui-monospace, monospace;
+
+  --maxw: 1120px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:18px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+/* labels & data use the mono utility face */
+.label{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--mist-ink);
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 28px;
+  background:rgba(244,246,243,.78);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s;
+}
+nav.scrolled{border-bottom:1px solid var(--mist)}
+.brand{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+.brand .dot{width:11px;height:11px;border-radius:50%;background:var(--swell);transition:background .4s,transform .4s}
+.brand:hover .dot{background:var(--trigger);transform:scale(1.25)}
+.navlinks{display:flex;gap:26px;font-family:var(--mono);font-size:13px;letter-spacing:.04em}
+.navlinks a{position:relative;padding:4px 0;color:var(--mist-ink);transition:color .25s}
+.navlinks a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1.5px;background:var(--trigger);transition:width .25s}
+.navlinks a:hover{color:var(--ink)}
+.navlinks a:hover::after{width:100%}
+@media(max-width:720px){.navlinks{display:none}}
+
+/* ============================================================
+   HERO  — breathing polymer network is the signature
+   ============================================================ */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden}
+#mesh{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero .wrap{position:relative;z-index:2}
+.hero-eyebrow{margin-bottom:22px}
+.hero h1{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:clamp(40px,7.5vw,86px);
+  line-height:.98;
+  letter-spacing:-.025em;
+  max-width:14ch;
+}
+.hero h1 em{font-family:var(--body);font-style:italic;font-weight:400;color:var(--swell)}
+.hero p.lede{
+  margin-top:28px;max-width:52ch;
+  font-size:clamp(19px,2.3vw,23px);
+  color:var(--ink);
+}
+.hero-cta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;
+  padding:13px 22px;border:1.5px solid var(--ink);border-radius:2px;
+  transition:background .25s,color .25s,border-color .25s;
+}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.primary:hover{background:var(--trigger);border-color:var(--trigger)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper)}
+
+/* ============================================================
+   METRICS STRIP  (mono, understated — not giant hero numbers)
+   ============================================================ */
+.metrics{border-top:1px solid var(--mist);border-bottom:1px solid var(--mist);background:var(--paper)}
+.metrics .wrap{display:flex;flex-wrap:wrap;gap:0;padding-top:0;padding-bottom:0}
+.metric{flex:1 1 0;min-width:140px;padding:26px 0;border-right:1px solid var(--mist)}
+.metric:last-child{border-right:none}
+.metric .n{font-family:var(--display);font-weight:600;font-size:30px;letter-spacing:-.02em}
+.metric .l{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mist-ink);margin-top:4px}
+@media(max-width:720px){.metric{flex:1 1 50%;border-right:1px solid var(--mist)}.metric:nth-child(2n){border-right:none}}
+
+/* ============================================================
+   SECTION SCAFFOLD
+   ============================================================ */
+section{padding:92px 0}
+.sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:46px}
+.sec-head .idx{font-family:var(--mono);font-size:13px;color:var(--trigger)}
+.sec-head h2{font-family:var(--display);font-weight:600;font-size:clamp(28px,4vw,42px);letter-spacing:-.02em}
+
+/* RESEARCH */
+.research-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--mist);border:1px solid var(--mist)}
+.rcard{background:var(--paper);padding:36px 34px;transition:background .35s}
+.rcard:hover{background:#fff}
+.rcard .rnum{font-family:var(--mono);font-size:12px;color:var(--swell);letter-spacing:.1em}
+.rcard h3{font-family:var(--display);font-weight:600;font-size:23px;margin:14px 0 12px;letter-spacing:-.01em}
+.rcard p{font-size:17px;color:#27433f}
+.rcard .tags{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--mist-ink);border:1px solid var(--mist);padding:3px 9px;border-radius:2px}
+@media(max-width:720px){.research-grid{grid-template-columns:1fr}}
+
+/* PEOPLE */
+.people-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.person{}
+.avatar{aspect-ratio:1;border-radius:3px;background:linear-gradient(135deg,var(--swell),#114b40);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:600;font-size:34px;color:var(--paper);position:relative;overflow:hidden}
+.avatar.lead{background:linear-gradient(135deg,#123d3a,var(--ink))}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.person h4{font-family:var(--display);font-weight:600;font-size:18px;margin-top:14px}
+.person .role{font-family:var(--mono);font-size:12px;color:var(--mist-ink);margin-top:3px}
+@media(max-width:900px){.people-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* PUBLICATIONS */
+.pub{display:grid;grid-template-columns:54px 1fr;gap:18px;padding:22px 0;border-top:1px solid var(--mist)}
+.pub:last-child{border-bottom:1px solid var(--mist)}
+.pub .pnum{font-family:var(--mono);font-size:13px;color:var(--mist-ink);padding-top:4px}
+.pub h4{font-family:var(--body);font-weight:500;font-size:19px;line-height:1.35}
+.pub .meta{font-family:var(--mono);font-size:12.5px;color:var(--mist-ink);margin-top:6px}
+.pub .meta b{color:var(--swell);font-weight:700}
+.pub-foot{margin-top:30px;font-family:var(--mono);font-size:13px}
+.pub-foot a{color:var(--swell);border-bottom:1px solid var(--mist);padding-bottom:2px}
+.pub-foot a:hover{color:var(--trigger);border-color:var(--trigger)}
+
+/* NEWS */
+.news-item{display:grid;grid-template-columns:130px 1fr;gap:20px;padding:18px 0;border-top:1px solid var(--mist)}
+.news-item:last-child{border-bottom:1px solid var(--mist)}
+.news-item .date{font-family:var(--mono);font-size:13px;color:var(--trigger)}
+.news-item p{font-size:17px}
+@media(max-width:600px){.news-item{grid-template-columns:1fr;gap:4px}}
+
+/* JOIN */
+.join{background:var(--ink);color:var(--paper)}
+.join .sec-head h2{color:var(--paper)}
+.join .sec-head .idx{color:var(--trigger)}
+.join p.big{font-family:var(--body);font-size:clamp(20px,3vw,28px);line-height:1.45;max-width:34ch}
+.join .contact{margin-top:36px;display:flex;flex-wrap:wrap;gap:38px}
+.join .contact .blk .label{color:#8fa39c}
+.join .contact .blk a,.join .contact .blk span{font-family:var(--display);font-size:18px;color:var(--paper);display:block;margin-top:6px}
+.join .contact .blk a:hover{color:var(--trigger)}
+
+/* FOOTER */
+footer{padding:34px 0;border-top:1px solid var(--mist)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:center}
+footer .label{color:var(--mist-ink)}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+:focus-visible{outline:2.5px solid var(--trigger);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<!-- ====================== NAV ====================== -->
+<nav id="nav">
+  <a class="brand" href="#top"><span class="dot"></span>Responsive&nbsp;Nanomedicine&nbsp;Lab</a>
+  <div class="navlinks">
+    <a href="#research">Research</a>
+    <a href="#people">People</a>
+    <a href="#publications">Publications</a>
+    <a href="#news">News</a>
+    <a href="#join">Join</a>
+  </div>
+</nav>
+
+<!-- ====================== HERO ====================== -->
+<header class="hero" id="top">
+  <canvas id="mesh"></canvas>
+  <div class="wrap">
+    <div class="hero-eyebrow label">Stimuli-responsive polymers &nbsp;·&nbsp; Nanomedicine</div>
+    <!-- EDIT: your group's one-line thesis -->
+    <h1>Polymers that <em>respond</em> — and deliver.</h1>
+    <p class="lede">We design stimuli-responsive polymers and nanomedicines that sense their environment and act on it: releasing genes, running enzymatic cascades, and reporting back from inside living systems.</p>
+    <div class="hero-cta">
+      <a class="btn primary" href="#research">Our research</a>
+      <a class="btn ghost" href="#join">Join the lab</a>
+    </div>
+  </div>
+</header>
+
+<!-- ====================== METRICS ====================== -->
+<!-- EDIT: keep these current -->
+<div class="metrics">
+  <div class="wrap">
+    <div class="metric"><div class="n">40+</div><div class="l">Publications</div></div>
+    <div class="metric"><div class="n">1,347</div><div class="l">Citations</div></div>
+    <div class="metric"><div class="n">19</div><div class="l">h-index</div></div>
+    <div class="metric"><div class="n">33</div><div class="l">i10-index</div></div>
+    <div class="metric"><div class="n">€804K</div><div class="l">Funding secured</div></div>
+  </div>
+</div>
+
+<!-- ====================== RESEARCH ====================== -->
+<section id="research">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="idx">01</span><h2>Research</h2></div>
+    <div class="research-grid">
+
+      <div class="rcard reveal">
+        <div class="rnum">— design</div>
+        <h3>Stimuli-responsive nanogels</h3>
+        <p>Crosslinked polymer networks engineered to swell, collapse, or disassemble on cue — pH, temperature, enzymes, or oxidative stress — so that cargo is held until the target environment unlocks it.</p>
+        <div class="tags"><span class="tag">RAFT / ATRP</span><span class="tag">thermoresponsive</span><span class="tag">degradable</span></div>
+      </div>
+
+      <div class="rcard reveal">
+        <div class="rnum">— deliver</div>
+        <h3>CRISPR / Cas9 RNP delivery</h3>
+        <p>Polymeric nanocapsules that protect Cas9–sgRNA ribonucleoproteins and ferry them across mucosal barriers, with a focus on transmucosal gene editing for cystic fibrosis.</p>
+        <div class="tags"><span class="tag">RNP encapsulation</span><span class="tag">mucosal</span><span class="tag">gene editing</span></div>
+      </div>
+
+      <div class="rcard reveal">
+        <div class="rnum">— react</div>
+        <h3>Chemoenzymatic nanoreactors</h3>
+        <p>Enzyme-loaded nanogels decorated with metal nanoclusters that run cascade reactions in confinement — coupling biocatalysis with controlled polymerization and tunable release.</p>
+        <div class="tags"><span class="tag">nanozymes</span><span class="tag">cascades</span><span class="tag">biocatalysis</span></div>
+      </div>
+
+      <div class="rcard reveal">
+        <div class="rnum">— report</div>
+        <h3>Theranostics &amp; digital twins</h3>
+        <p>Sensor-coupled, imaging-active platforms paired with physics-informed models that predict nanocarrier transport — closing the loop between what a material does and what we can measure.</p>
+        <div class="tags"><span class="tag">imaging</span><span class="tag">ML / modelling</span><span class="tag">theranostics</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====================== PEOPLE ====================== -->
+<section id="people">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="idx">02</span><h2>People</h2></div>
+    <div class="people-grid">
+      <!-- EDIT: swap initials for photos by replacing the .avatar div with <img src="..."> -->
+      <div class="person reveal">
+        <!-- PHOTO: upload a square headshot named krishan.jpg to the repo (same place as index.html). Until it exists, "KK" shows. -->
+        <div class="avatar lead"><img src="krishan.jpg" alt="Krishan Kumar" onerror="this.remove();this.parentElement.textContent='KK'"></div>
+        <h4>Dr. Krishan Kumar</h4>
+        <div class="role">Principal Investigator · Ramón y Cajal Fellow</div>
+      </div>
+      <div class="person reveal">
+        <div class="avatar">—</div>
+        <h4>Open position</h4>
+        <div class="role">PhD Student</div>
+      </div>
+      <div class="person reveal">
+        <div class="avatar">—</div>
+        <h4>Open position</h4>
+        <div class="role">Postdoctoral Researcher</div>
+      </div>
+      <div class="person reveal">
+        <div class="avatar">—</div>
+        <h4>Open position</h4>
+        <div class="role">MSc / Visiting</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== PUBLICATIONS ====================== -->
+<section id="publications">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="idx">03</span><h2>Selected publications</h2></div>
+    <!-- EDIT: replace these with your highlights -->
+    <div class="reveal">
+      <div class="pub">
+        <div class="pnum">[01]</div>
+        <div>
+          <h4>Deep-eutectic-solvent-stabilized ICG J-aggregates for photothermal and photodynamic therapy</h4>
+          <div class="meta">K. Kumar et&nbsp;al. · <b>Nano Letters</b> · 2025</div>
+        </div>
+      </div>
+      <div class="pub">
+        <div class="pnum">[02]</div>
+        <div>
+          <h4>Enzymatic ring-opening polymerization of ε-caprolactone in deep eutectic solvents</h4>
+          <div class="meta">K. Kumar et&nbsp;al. · <b>Journal</b> · 2024</div>
+        </div>
+      </div>
+      <div class="pub">
+        <div class="pnum">[03]</div>
+        <div>
+          <h4>Stimuli-responsive polymer nanogels for intracellular delivery of biomacromolecules</h4>
+          <div class="meta">K. Kumar et&nbsp;al. · <b>Journal</b> · 2023</div>
+        </div>
+      </div>
+    </div>
+    <p class="pub-foot">
+      Full list:
+      <a href="https://scholar.google.co.in/citations?hl=en&amp;user=G0ysXxgAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Google&nbsp;Scholar</a> ·
+      <a href="https://www.linkedin.com/in/-krishan-kumar/" target="_blank" rel="noopener">LinkedIn</a> ·
+      <a href="https://x.com/krishansheora14" target="_blank" rel="noopener">X&nbsp;/&nbsp;Twitter</a>
+    </p>
+  </div>
+</section>
+
+<!-- ====================== NEWS ====================== -->
+<section id="news">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="idx">04</span><h2>News</h2></div>
+    <div class="reveal">
+      <div class="news-item"><div class="date">2026</div><p>Lab established with the award of a <b>Ramón y Cajal</b> fellowship. Now recruiting at all levels.</p></div>
+      <div class="news-item"><div class="date">2025</div><p>One-month collaborative research visit to the Hedtrich lab at UBC, Vancouver.</p></div>
+      <div class="news-item"><div class="date">2025</div><p>New work on responsive nanogels and chemoenzymatic cascades out / in revision.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== JOIN ====================== -->
+<section id="join" class="join">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="idx">05</span><h2>Join us</h2></div>
+    <p class="big reveal">We're looking for curious chemists, engineers, and biologists who want to build materials that do something. PhD, postdoc, and visiting positions are open.</p>
+    <div class="contact reveal">
+      <div class="blk"><div class="label">Email</div><a href="mailto:ks90859@gmail.com">ks90859@gmail.com</a></div>
+      <div class="blk"><div class="label">Location</div><span>Spain</span></div>
+      <div class="blk"><div class="label">Find us</div>
+        <a href="https://scholar.google.co.in/citations?hl=en&amp;user=G0ysXxgAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Scholar</a>
+        <a href="https://www.linkedin.com/in/-krishan-kumar/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://x.com/krishansheora14" target="_blank" rel="noopener">X / Twitter</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== FOOTER ====================== -->
+<footer>
+  <div class="wrap">
+    <span class="label">© <span id="yr"></span> Responsive Nanomedicine Lab</span>
+    <span class="label">Built for GitHub Pages · single file</span>
+  </div>
+</footer>
+
+<script>
+/* year */
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* nav border on scroll */
+const nav = document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled', scrollY>20));
+
+/* reveal on scroll */
+const io = new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ============================================================
+   SIGNATURE: breathing polymer network with stimulus ripples.
+   Nodes connected like a crosslinked nanogel; periodically a
+   "stimulus" is applied and a wave of charge sweeps through,
+   shifting the color emerald -> coral, then relaxing back.
+   ============================================================ */
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cv = document.getElementById('mesh'), ctx = cv.getContext('2d');
+  let W,H,dpr,nodes=[],links=[];
+  const SWELL=[27,110,94], TRIG=[255,107,74];
+
+  function size(){
+    dpr=Math.min(devicePixelRatio||1,2);
+    W=cv.clientWidth;H=cv.clientHeight;
+    cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    build();
+  }
+  function build(){
+    const target=Math.round((W*H)/16000);
+    const n=Math.max(28,Math.min(110,target));
+    nodes=[];
+    for(let i=0;i<n;i++){
+      nodes.push({x:Math.random()*W,y:Math.random()*H,
+        ox:0,oy:0,vx:0,vy:0,
+        ph:Math.random()*Math.PI*2, charge:0});
+    }
+    // link nearby nodes (crosslinks)
+    links=[];
+    const R=Math.min(W,H)*0.16;
+    for(let i=0;i<nodes.length;i++)
+      for(let j=i+1;j<nodes.length;j++){
+        const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y;
+        if(dx*dx+dy*dy < R*R) links.push([i,j]);
+      }
+  }
+  function mix(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
+  function rgb(c,al){return `rgba(${c[0]|0},${c[1]|0},${c[2]|0},${al})`;}
+
+  // apply a stimulus from a point -> ripple of charge
+  function stimulus(px,py){
+    nodes.forEach(nd=>{
+      const d=Math.hypot(nd.x-px,nd.y-py);
+      nd._td = d;            // distance, used to delay the wave
+    });
+    nodes.forEach(nd=>{
+      setTimeout(()=>{ nd.charge=Math.min(1,nd.charge+0.9); }, nd._td*1.6);
+    });
+  }
+
+  let t=0;
+  function frame(){
+    t+=0.016;
+    ctx.clearRect(0,0,W,H);
+    // gentle breathing drift
+    nodes.forEach(nd=>{
+      nd.ph+=0.012;
+      const amp=6+nd.charge*10;
+      nd.x += Math.cos(nd.ph)*0.06;
+      nd.y += Math.sin(nd.ph*0.9)*0.06;
+      nd.dx = Math.cos(nd.ph)*amp;
+      nd.dy = Math.sin(nd.ph*1.1)*amp;
+      nd.charge*=0.972;               // relax back to native state
+    });
+    // links
+    links.forEach(([i,j])=>{
+      const a=nodes[i],b=nodes[j];
+      const ax=a.x+a.dx,ay=a.y+a.dy,bx=b.x+b.dx,by=b.y+b.dy;
+      const ch=(a.charge+b.charge)/2;
+      const col=mix(SWELL,TRIG,ch);
+      ctx.strokeStyle=rgb(col, 0.05+ch*0.22);
+      ctx.lineWidth=0.8+ch*1.2;
+      ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();
+    });
+    // nodes
+    nodes.forEach(nd=>{
+      const col=mix(SWELL,TRIG,nd.charge);
+      const r=1.6+nd.charge*3;
+      ctx.fillStyle=rgb(col,0.18+nd.charge*0.55);
+      ctx.beginPath();ctx.arc(nd.x+nd.dx,nd.y+nd.dy,r,0,7);ctx.fill();
+    });
+    requestAnimationFrame(frame);
+  }
+
+  function start(){
+    size();
+    if(reduce){ // static single frame, native state only
+      nodes.forEach(nd=>{nd.dx=0;nd.dy=0;});
+      ctx.clearRect(0,0,W,H);
+      links.forEach(([i,j])=>{const a=nodes[i],b=nodes[j];
+        ctx.strokeStyle=rgb(SWELL,0.08);ctx.lineWidth=0.8;
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();});
+      nodes.forEach(nd=>{ctx.fillStyle=rgb(SWELL,0.25);
+        ctx.beginPath();ctx.arc(nd.x,nd.y,1.8,0,7);ctx.fill();});
+      return;
+    }
+    frame();
+    // periodic stimulus from a random edge point
+    setInterval(()=>stimulus(Math.random()*W, Math.random()*H*0.6), 5200);
+    setTimeout(()=>stimulus(W*0.5,H*0.4), 1400);
+    // stimulus on pointer move over hero (throttled)
+    let last=0;
+    cv.parentElement.addEventListener('pointermove',e=>{
+      const now=performance.now(); if(now-last<700)return; last=now;
+      const r=cv.getBoundingClientRect();
+      stimulus(e.clientX-r.left, e.clientY-r.top);
+    });
+  }
+  addEventListener('resize',()=>{clearTimeout(window._rz);window._rz=setTimeout(size,200);});
+  start();
+})();
+</script>
+</body>
+</html>
